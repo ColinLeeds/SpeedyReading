@@ -4,10 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Speedy Reading</title>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.0/jquery.cookie.js" type="text/javascript"></script>
 <script src="javaScript/script.js" type="text/javascript"></script>
-<!-- jQuery UI -->
-<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
 <link href="css/oneColFixCtrHdr.css" rel="stylesheet" type="text/css" />
 </head>
@@ -15,6 +13,11 @@
 <body>
 
 <div class="container">
+
+	<div class="cookieMessage" id="cookieDivision">
+    	This site uses cookies. By continuing to use this site you agree to our use of cookies.&nbsp;&nbsp;
+        <button id="cookieOK">OK</button>
+    </div>
 
   <div class="header">
   	<a href="#">
@@ -30,8 +33,92 @@
   </div>
   
   <div class="content">
-  	<textarea id="speedyText">
-    </textarea>
+  
+  <div class="readingText" id="textToRead"></div>
+    
+    <div id="speedyTextControls">
+    
+    	<div id="goDiv" class="textControl">
+            <button id="go" style="width:200px">Go</button>
+            <button id="stop" style="width:200px;" disabled="disabled">Stop</button>
+        </div>
+    
+        <div id="textSizeControl" class="textControl">
+            <div class="vAlign vAlignMiddle titleWidth">
+                Text size : 
+            </div>
+            <div class="vAlign vAlignMiddle">
+            	<input type="range" id="fontSizeSlider" min="10" max="24" value="18"/>
+            </div>
+            <div class="vAlign vAlignMiddle">
+                <span id="fontSizeDisplay">18</span>&nbsp;Pixels
+            </div>
+        </div>
+        
+        <div id="wordGroupControl" class="textControl">
+            <div class="vAlign vAlignMiddle titleWidth">
+                Words in a group :
+            </div>
+            <div class="vAlign vAlignMiddle">
+                <input type="range" id="wordGroupSlider" min="2" max="50" value="3"/>
+            </div>
+            <div class="vAlign vAlignMiddle">
+                <span id="wordGroupDisplay">3</span>&nbsp;Words
+            </div>
+        </div>
+        
+        <div id="wordGroupHighlightTime" class="textControl">
+            <div class="vAlign vAlignMiddle titleWidth">
+                Highlight time :
+            </div>
+            <div class="vAlign vAlignMiddle">
+                <input type="range" id="wordGroupHighlightSlider" min="100" max="6000" value="2000"/>
+            </div>
+            <div class="vAlign vAlignMiddle">
+                <span id="wordGroupHighlightDisplay">2000</span>&nbsp;Milliseconds
+            </div>
+        </div>
+          
+       	<div id="normalTextControl" class="textControl">
+            <div class="vAlign vAlignMiddle titleWidth">
+            	Normal text :
+            </div>
+            <div class="vAlign vAlignMiddle">
+            	<input type="color" id="normalText" />
+            </div>
+  		</div>
+        
+        <div id="normalBackgroundControl" class="textControl">
+        	<div class="vAlign vAlignMiddle titleWidth">
+            	Normal background :
+            </div>
+       
+            <div class="vAlign vAlignMiddle">
+            	<input type="color" id="normalBackground" />
+            </div>
+        </div>
+        
+        <div id="highlightTextControl" class="textControl">
+            <div class="vAlign vAlignMiddle titleWidth">
+            	Highlight text :
+            </div>
+            <div class="vAlign vAlignMiddle">
+            	<input type="color" id="highlightText" />
+            </div>
+        </div>
+        
+        <div id="highlightBackgroundControl" class="textControl">
+            <div class="vAlign vAlignMiddle titleWidth">
+            	Highlight background :
+            </div>
+            <div class="vAlign vAlignMiddle">
+            	<input type="color" id="highlightBackground" />
+            </div>
+     	</div>
+     
+    </div>
+    
+    <br />
   	<a href="#" id="speedReadingWhat">What is speed reading?</a>
     <div class="collapsible" id="speedReadingWhatAnswer">
         <p>
@@ -47,6 +134,8 @@
     <br />
     Want to choose your own text? No problem, just paste it into the reading box.
     </p>
+    
+    
   </div><!-- end .content -->
   
   <div class="footer">
