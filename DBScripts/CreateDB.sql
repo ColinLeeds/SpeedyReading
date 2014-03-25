@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS ReadingText
+
+CREATE TABLE ReadingText
+(
+	readingTextId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	readingText VARCHAR(1115) NOT NULL,
+	isbn VARCHAR(13) NOT NULL,
+	contributer VARCHAR(50) NOT NULL
+);
