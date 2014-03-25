@@ -17,10 +17,16 @@ var defaultNormalTextColor = '#000000';
 var defaultHighlightBackgroundColor = '#000000';
 var defaultHighlightTextColor = '#FFFFFF';
 
+var currentText = testText;
+
+var textGathered = false;
+
 $(document).ready
 (
 	function()
 	{
+		getReadingText();	
+		
 		setupTextSizeControl();
 		setupGroupSizeControl();
 		setupHighlightTimeControl();
@@ -28,6 +34,7 @@ $(document).ready
 		setupGoButton();
 		setupStopButton();
 		setupCookieConsentButton();
+		setupChangeTextButton();
 		
 		/*$('#speedReadingWhat').bind
 		(
@@ -52,8 +59,6 @@ $(document).ready
 		{
 			$('.cookieMessage').css('display', 'none');
 		}
-		
-		highlightText();
 	}
 )
 
@@ -88,7 +93,7 @@ function highlightText()
 	//clear out the existing text
 	$('#textToRead').html('');
 	
-	textArr = testText.split(' ');
+	textArr = currentText.split(' ');
 	
 	for(var i=0; i<textArr.length; i++)
 	{
@@ -178,7 +183,7 @@ function setupTextSizeControl()
 /*Set up the word group control*/
 function setupGroupSizeControl()
 {
-	var groupSize = $.cookie('groupSize');
+	groupSize = $.cookie('groupSize');
 	if(groupSize != undefined)
 	{
 		defaultGroupSize = groupSize;
@@ -327,6 +332,7 @@ function setupGoButton()
 			
 			$('#go').attr('disabled', true);
 			$('#stop').attr('disabled', false);
+			$('#change').attr('disabled', true);
 		}
 	);
 }
@@ -345,10 +351,23 @@ function setupStopButton()
 			
 			$('#go').attr('disabled', false);
 			$('#stop').attr('disabled', true);
+			$('#change').attr('disabled', false);
 			
 			firstWord = 0;
 			
 			highlightText();
+		}
+	);
+}
+
+function setupChangeTextButton()
+{
+	$('#change').bind
+	(
+		'click',
+		function()
+		{
+			getReadingText();
 		}
 	);
 }
@@ -389,4 +408,28 @@ function cookieConsent()
 		5000
 	);
 	$.cookie('consent', true);
+}
+
+function getReadingText()
+{
+	/*make an ajax call to getText.php*/
+	var query = "getText.php";
+	
+	$.ajax
+	(
+		{
+			type:'GET',
+			dataType: 'html',
+			url:query,
+			success:processData
+		}
+	);
+}
+
+function processData(data)
+{
+	currentText = data;
+	$('#textToRead').html('');
+	$('#textToRead').append(currentText);
+	highlightText();
 }
