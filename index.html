@@ -5,6 +5,7 @@
 <title>Speedy Reading</title>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js" type="text/javascript"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.0/jquery.cookie.js" type="text/javascript"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js" type="text/javascript"></script>
 <script src="javaScript/script.js" type="text/javascript"></script>
 
 <link href="css/oneColFixCtrHdr.css" rel="stylesheet" type="text/css" />
@@ -20,31 +21,46 @@
     </div>
 
   <div class="header">
-  	<a href="#">
+  	<a href="#" class="noTextDecoration">
     	<div class="vAlign vAlignMiddle">
     		<img src="images/speedyBook.png" alt="Speedy Reading Logo" name="Insert_logo" id="logo" class="vAlign vAlignMiddle" />
         </div>
         <div class="vAlign vAlignMiddle">
-        	<span class="headerText">
+        	<span class="headerText noTextDecoration">
             	Speedy Reading
         	</span>
      	</div>
     </a> 
   </div>
   
+ 	<div class="menuBar">
+    	<div class="rightMenu">
+        	<ul class="topMenu">
+            	<li><a href="index.html">Home</a></li>
+            	<li><a href="" onclick="jQuery stuff; return false;">Book Details</a></li>
+            	<li><a href="" onclick="jQuery stuff; return false;">Information</a></li>
+            	<li><a href="contact.html" onclick="jQuery stufff; return false;">Contact</a></li>
+        	</ul>
+      	</div>
+	</div>
+      
+     
+  
   <div class="content">
   
   <div class="readingText" id="textToRead"></div>
+  
+  	<div id="goDiv" class="textControl">
+        <button id="go" class="buttonWidth">Go</button>
+        <button id="stop" class="buttonWidth" disabled="disabled">Stop</button>
+        <button id="change" class="buttonWidth">Change Text</button>
+   	</div>
     
-    <div id="speedyTextControls">
+   <a href="" id="showHideControls" class="showHide" onclick="showHideControls(); return false;">Show controls</a>
     
-    	<div id="goDiv" class="textControl">
-            <button id="go" style="width:150px">Go</button>
-            <button id="stop" style="width:150px;" disabled="disabled">Stop</button>
-            <button id="change" style="width:150px;">Change Text</button>
-        </div>
+    <div id="speedyTextControls" class="collapsible">
     
-        <div id="textSizeControl" class="textControl">
+       <div id="textSizeControl" class="textControl">
             <div class="vAlign vAlignMiddle titleWidth">
                 Text size : 
             </div>
@@ -93,7 +109,6 @@
         	<div class="vAlign vAlignMiddle titleWidth">
             	Normal background :
             </div>
-       
             <div class="vAlign vAlignMiddle">
             	<input type="color" id="normalBackground" />
             </div>
@@ -119,7 +134,7 @@
      
     </div>
     
-    <br />
+    <!--<br />
   	<a href="#" id="speedReadingWhat">What is speed reading?</a>
     <div class="collapsible" id="speedReadingWhatAnswer">
         <p>
@@ -134,7 +149,7 @@
     Simple choose how many words to group, click Go. It's that easy! Give it a try.
     <br />
     Want to choose your own text? No problem, just paste it into the reading box.
-    </p>
+    </p>-->
     
     
   </div><!-- end .content -->

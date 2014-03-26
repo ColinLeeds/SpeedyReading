@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="index.html" server="192.186.255.2" local="130402476010000000" remote="130402227000000000" Dst="1" />
+<file name="index.html" server="192.186.255.2" local="130403278257176000" remote="130403026200000000" Dst="1" />
 <file name=".gitattributes" server="192.186.255.2" local="130356847963626495" remote="130397953200000000" Dst="1" />
 <file name=".gitignore" server="192.186.255.2" local="130356847963876689" remote="130397953200000000" Dst="1" />
 <file name="getText.php" server="192.186.255.2" local="130402437510148000" remote="130402185600000000" Dst="1" />
+<file name="contact.html" server="192.186.255.2" local="130403251826696000" remote="130402999800000000" Dst="1" />
+<file name="process.php" server="192.186.255.2" local="130403266835856000" remote="130403014800000000" Dst="1" />
 </dwsync>

@@ -9,6 +9,10 @@ var defaultTextSize = 18;
 var defaultGroupSize = 3;
 var defaultHighlightTime = 2000;
 
+var textSize = defaultTextSize;
+var groupSize = defaultGroupSize;
+var highlightTime = defaultHighlightTime;
+
 var highlightIntervalId = 0;
 var endReached = false;
 
@@ -16,6 +20,11 @@ var defaultNormalBackgroundColor = '#FFFFCC';
 var defaultNormalTextColor = '#000000';
 var defaultHighlightBackgroundColor = '#000000';
 var defaultHighlightTextColor = '#FFFFFF';
+
+var normalBackgroundColor = defaultNormalBackgroundColor;
+var normalTextColor = defaultNormalTextColor;
+var highlightBackgroundColor = defaultHighlightBackgroundColor;
+var highlightTextColor = defaultHighlightTextColor;
 
 var currentText = testText;
 
@@ -35,24 +44,7 @@ $(document).ready
 		setupStopButton();
 		setupCookieConsentButton();
 		setupChangeTextButton();
-		
-		/*$('#speedReadingWhat').bind
-		(
-			'click',
-			function()
-			{
-				$('#speedReadingWhatAnswer').slideToggle('slow');
-			}
-		);
-			
-		$('#speedReadingWhatHide').bind
-		(
-			'click',
-			function()
-			{
-				$('#speedReadingWhatAnswer').slideUp('slow');
-			}
-		);*/
+		setupContactFormValidation();
 		
 		var cookieConsent = $.cookie('consent');
 		if(cookieConsent != undefined)
@@ -158,14 +150,15 @@ function ensureInt(i)
 /*Set up the font size control*/
 function setupTextSizeControl()
 {
-	var fontSize = $.cookie('fontSize');
-	if(fontSize != undefined)
+	textSize = ensureInt($.cookie('fontSize'));
+	if(textSize == undefined)
 	{
-		defaultTextSize = fontSize;
+		textSize = defaultTextSize;
 	}
-	$('#fontSizeSlider').val(defaultTextSize);
-	$('#fontSizeDisplay').html(defaultTextSize);
-	$('#textToRead').css('font-size', defaultTextSize+'px');
+
+	$('#fontSizeSlider').val(textSize);
+	$('#fontSizeDisplay').html(textSize);
+	$('#textToRead').css('font-size', textSize+'px');
 	$('#fontSizeSlider').bind
 	(
 		'change',
@@ -174,7 +167,7 @@ function setupTextSizeControl()
 			var fSize = event.target.value;
 			$('#fontSizeDisplay').html(fSize);
 			$('#textToRead').css('font-size', fSize+'px');
-			$.cookie('fontSize', fSize);
+			$.cookie('fontSize', fSize, {expires:9999});
 			cookieConsent();
 		}
 	);
@@ -183,13 +176,14 @@ function setupTextSizeControl()
 /*Set up the word group control*/
 function setupGroupSizeControl()
 {
-	groupSize = $.cookie('groupSize');
-	if(groupSize != undefined)
+	groupSize = ensureInt($.cookie('groupSize'));
+	if(groupSize == undefined)
 	{
-		defaultGroupSize = groupSize;
+		groupSize = defaultGroupSize;
 	}
-	$('#wordGroupSlider').val(defaultGroupSize);
-	$('#wordGroupDisplay').html(defaultGroupSize);
+	
+	$('#wordGroupSlider').val(groupSize);
+	$('#wordGroupDisplay').html(groupSize);
 	$('#wordGroupControl').bind
 	(
 		'change',
@@ -199,7 +193,7 @@ function setupGroupSizeControl()
 			groupSize = ensureInt(groupSize);
 			$('#wordGroupDisplay').html(groupSize);
 			highlightText();
-			$.cookie('groupSize', groupSize);
+			$.cookie('groupSize', groupSize, {expires:9999});
 			cookieConsent()
 		}
 	);
@@ -208,13 +202,14 @@ function setupGroupSizeControl()
 /*Set up the highlight control*/
 function setupHighlightTimeControl()
 {
-	var highlightTime = $.cookie('highlightTime');
-	if(highlightTime != undefined)
+	highlightTime = ensureInt($.cookie('highlightTime'));
+	if(highlightTime == undefined)
 	{
-		defaultHighlightTime = highlightTime;
+		highlightTime = defaultHighlightTime;
 	}
-	$('#wordGroupHighlightSlider').val(defaultHighlightTime);
-	$('#wordGroupHighlightDisplay').html(defaultHighlightTime);
+	
+	$('#wordGroupHighlightSlider').val(highlightTime);
+	$('#wordGroupHighlightDisplay').html(highlightTime);
 	$('#wordGroupHighlightSlider').bind
 	(
 		'change',
@@ -222,7 +217,7 @@ function setupHighlightTimeControl()
 		{
 			var wordGroupHighlight = event.target.value;
 			$('#wordGroupHighlightDisplay').html(wordGroupHighlight);
-			$.cookie('highlightTime', wordGroupHighlight);
+			$.cookie('highlightTime', wordGroupHighlight, {expires:9999});
 			cookieConsent();
 		}
 	);
@@ -230,13 +225,14 @@ function setupHighlightTimeControl()
 
 function setupColorControls()
 {
-	var normalBackground = $.cookie('normalBackground');
-	if(normalBackground != undefined)
+	normalBackgroundColor = $.cookie('normalBackground');
+	if(normalBackgroundColor == undefined)
 	{
-		defaultNormalBackgroundColor = normalBackground;
+		normalBackgroundColor = defaultNormalBackgroundColor;
 	}
-	$('#normalBackground').val(defaultNormalBackgroundColor);
-	$('#textToRead').css('background-color', defaultNormalBackgroundColor);
+	
+	$('#normalBackground').val(normalBackgroundColor);
+	$('#textToRead').css('background-color', normalBackgroundColor);
 	$('#normalBackground').bind
 	(
 		'change',
@@ -244,18 +240,19 @@ function setupColorControls()
 		{
 			var normalBackgroundColor = event.target.value;
 			$('#textToRead').css('background-color', normalBackgroundColor);
-			$.cookie('normalBackground', normalBackgroundColor);
+			$.cookie('normalBackground', normalBackgroundColor, {expires:9999});
 			cookieConsent();
 		}
 	);
 	
-	var normalText = $.cookie('normalText');
-	if(normalText != undefined)
+	normalTextColor = $.cookie('normalText');
+	if(normalTextColor == undefined)
 	{
-		defaultNormalTextColor = normalText;
+		normalTextColor = defaultNormalTextColor;
 	}
-	$('#normalText').val(defaultNormalTextColor);
-	$('#textToRead').css('color', defaultNormalTextColor);
+	
+	$('#normalText').val(normalTextColor);
+	$('#textToRead').css('color', normalTextColor);
 	$('#normalText').bind
 	(
 		'change',
@@ -263,18 +260,19 @@ function setupColorControls()
 		{
 			var normalTextColor = event.target.value;
 			$('#textToRead').css('color', normalTextColor);
-			$.cookie('normalText', normalTextColor);
+			$.cookie('normalText', normalTextColor, {expires:9999});
 			cookieConsent();
 		}
 	);
 	
-	var highlightBackground = $.cookie('highlightBackground');
-	if(highlightBackground != undefined)
+	highlightBackgroundColor = $.cookie('highlightBackground');
+	if(highlightBackgroundColor == undefined)
 	{
-		defaultHighlightBackgroundColor = highlightBackground;
+		highlightBackgroundColor = defaultHighlightBackgroundColor;
 	}
-	$('#highlightBackground').val(defaultHighlightBackgroundColor);
-	$('.highlight').css('background-color', defaultHighlightBackgroundColor);
+	
+	$('#highlightBackground').val(highlightBackgroundColor);
+	$('.highlight').css('background-color', highlightBackgroundColor);
 	$('#highlightBackground').bind
 	(
 		'change',
@@ -282,18 +280,19 @@ function setupColorControls()
 		{
 			var highlightBackgroundColor = event.target.value;
 			$('.highlight').css('background-color', highlightBackgroundColor);
-			$.cookie('highlightBackground', highlightBackgroundColor);
+			$.cookie('highlightBackground', highlightBackgroundColor, {expires:9999});
 			cookieConsent();
 		}
 	);
 	
-	var highlightText = $.cookie('highlightText');
-	if(highlightText != undefined)
+	highlightTextColor = $.cookie('highlightText');
+	if(highlightTextColor == undefined)
 	{
-		defaultHighlightTextColor = highlightText;
+		highlightTextColor = defaultHighlightTextColor;
 	}
-	$('#highlightText').val(defaultHighlightTextColor);
-	$('.highlight').css('color', defaultHighlightTextColor);
+	
+	$('#highlightText').val(highlightTextColor);
+	$('.highlight').css('color', highlightTextColor);
 	$('#highlightText').bind
 	(
 		'change',
@@ -301,7 +300,7 @@ function setupColorControls()
 		{
 			var highlightTextColor = event.target.value;
 			$('.highlight').css('color', highlightTextColor);
-			$.cookie('highlightText', highlightTextColor);
+			$.cookie('highlightText', highlightTextColor, {expires:9999});
 			cookieConsent();
 		}
 	);
@@ -372,6 +371,77 @@ function setupChangeTextButton()
 	);
 }
 
+
+function setupContactFormValidation()
+{
+	jQuery.validator.addMethod
+	(
+		'answercheck', 
+		function (value, element) 
+		{
+        	return this.optional(element) || /^\bcat\b$/.test(value);
+    	}, 
+		"type the correct answer -_-"
+	);
+
+	$('#contact').validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 2
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            message: {
+                required: true,
+				minlength: 10
+            },
+            answer: {
+                required: true,
+                answercheck: true
+            }
+        },
+        messages: {
+            name: {
+                required: "come on, you have a name don't you?",
+                minlength: "your name must consist of at least 2 characters"
+            },
+            email: {
+                required: "no email, no message"
+            },
+            message: {
+                required: "um...yea, you have to write something to send this form.",
+                minlength: "thats all? really?"
+            },
+            answer: {
+                required: "sorry, wrong answer!"
+            }
+        },
+        submitHandler: function(form) {
+            $(form).ajaxSubmit({
+                type:"POST",
+                data: $(form).serialize(),
+                url:"process.php",
+                success: function() {
+                    $('#contact :input').attr('disabled', 'disabled');
+                    $('#contact').fadeTo( "slow", 0.15, function() {
+                        $(this).find(':input').attr('disabled', 'disabled');
+                        $(this).find('label').css('cursor','default');
+                        $('#success').fadeIn();
+                    });
+                },
+                error: function() {
+                    $('#contact').fadeTo( "slow", 0.15, function() {
+                        $('#error').fadeIn();
+                    });
+                }
+            });
+        }
+    });
+}
+
 function setupCookieConsentButton()
 {
 	$('#cookieOK').bind
@@ -379,10 +449,23 @@ function setupCookieConsentButton()
 		'click',
 		function()
 		{
-			
 			cookieConsent();
 		}
 	);
+}
+
+function showHideControls()
+{
+	if($('#showHideControls').html() == 'Show controls')
+	{
+		$('#showHideControls').html('Hide controls');
+		$('#speedyTextControls').slideDown('slow');
+	}
+	else
+	{
+		$('#showHideControls').html('Show controls');
+		$('#speedyTextControls').slideUp('slow');
+	}
 }
 
 function setControlsDisabled(attrValue)
@@ -407,7 +490,7 @@ function cookieConsent()
 		},
 		5000
 	);
-	$.cookie('consent', true);
+	$.cookie('consent', true, {expires:9999, path: '/'});
 }
 
 function getReadingText()
