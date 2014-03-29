@@ -36,10 +36,36 @@
  	<div class="menuBar">
     	<div class="rightMenu">
         	<ul class="topMenu">
-            	<li><a href="index.html">Home</a></li>
-            	<li><a href="" onclick="jQuery stuff; return false;">Book Details</a></li>
-            	<li><a href="" onclick="jQuery stuff; return false;">Information</a></li>
-            	<li><a href="contact.html" onclick="jQuery stufff; return false;">Contact</a></li>
+            	<li>
+                	<a href="" onclick="return false;">
+                    	Book Details &nbsp;|&nbsp;&nbsp;
+                    </a>
+                    <div class="informationDisplay" id="bookInformation">
+                    	Loading book details...
+                    </div>
+                </li>
+            	<li>
+                	<a href="" onclick="return false;">
+                    	Information &nbsp;|&nbsp;&nbsp;
+                    </a>
+                    <ul class="subMenu">
+                    	<li>
+                        	<a href="information.html">
+                            	Speed Reading
+                            </a>
+                        </li>
+                        <li>
+                        	<a href="useThisSite.html">
+                            	Instructions
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            	<li>
+                	<a href="contact.html">
+                    	Contact
+                    </a>
+                </li>
         	</ul>
       	</div>
 	</div>
@@ -50,6 +76,7 @@
   
   <div class="readingText" id="textToRead"></div>
   
+  <div id="controls" style="height:250px;">
   	<div id="goDiv" class="textControl">
         <button id="go" class="buttonWidth">Go</button>
         <button id="stop" class="buttonWidth" disabled="disabled">Stop</button>
@@ -133,33 +160,18 @@
      	</div>
      
     </div>
+    </div>
     
-    <!--<br />
-  	<a href="#" id="speedReadingWhat">What is speed reading?</a>
-    <div class="collapsible" id="speedReadingWhatAnswer">
-        <p>
-            Speed reading is the ability to read rapidly by training the eye to view several phrases or sentences at once.
-        </p>
-        <a href="#"><span class="smallText" id="speedReadingWhatHide">Hide</span></a>
-        </div>
-    <p>
-    <br />
-    Want to learn to speed read? You've come to the right place.
-    <br />
-    Simple choose how many words to group, click Go. It's that easy! Give it a try.
-    <br />
-    Want to choose your own text? No problem, just paste it into the reading box.
-    </p>-->
-    
-    
-  </div><!-- end .content -->
+  </div>
+  
+  <div style="height:20px;"></div>
   
   <div class="footer">
     <p>
-        &copy; <a href="http://www.whole-new-world.com">Whole New World web design</a>
+        <a href="http://www.whole-new-world.com">Designed by Whole New World web design</a>
     </p>
-  </div><!-- end .footer -->
+  </div>
   
-  </div><!-- end .container -->
+  </div>
 </body>
 </html>

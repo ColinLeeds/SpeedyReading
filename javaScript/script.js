@@ -30,12 +30,13 @@ var currentText = testText;
 
 var textGathered = false;
 
+var defaultOLID = 'OL7205389M'  //Moby Dick
+var currentOLID = defaultOLID;
+
 $(document).ready
 (
 	function()
 	{
-		getReadingText();	
-		
 		setupTextSizeControl();
 		setupGroupSizeControl();
 		setupHighlightTimeControl();
@@ -45,12 +46,16 @@ $(document).ready
 		setupCookieConsentButton();
 		setupChangeTextButton();
 		setupContactFormValidation();
+		setupSubMenuAnimation();
+		
 		
 		var cookieConsent = $.cookie('consent');
 		if(cookieConsent != undefined)
 		{
 			$('.cookieMessage').css('display', 'none');
 		}
+		
+		getReadingText();
 	}
 )
 
@@ -151,7 +156,7 @@ function ensureInt(i)
 function setupTextSizeControl()
 {
 	textSize = ensureInt($.cookie('fontSize'));
-	if(textSize == undefined)
+	if(isNaN(textSize))
 	{
 		textSize = defaultTextSize;
 	}
@@ -177,7 +182,7 @@ function setupTextSizeControl()
 function setupGroupSizeControl()
 {
 	groupSize = ensureInt($.cookie('groupSize'));
-	if(groupSize == undefined)
+	if(isNaN(groupSize))
 	{
 		groupSize = defaultGroupSize;
 	}
@@ -203,7 +208,7 @@ function setupGroupSizeControl()
 function setupHighlightTimeControl()
 {
 	highlightTime = ensureInt($.cookie('highlightTime'));
-	if(highlightTime == undefined)
+	if(isNaN(highlightTime))
 	{
 		highlightTime = defaultHighlightTime;
 	}
@@ -398,7 +403,7 @@ function setupContactFormValidation()
                 required: true,
 				minlength: 10
             },
-            answer: {
+            captcha: {
                 required: true,
                 answercheck: true
             }
@@ -415,7 +420,7 @@ function setupContactFormValidation()
                 required: "um...yea, you have to write something to send this form.",
                 minlength: "thats all? really?"
             },
-            answer: {
+            captcha: {
                 required: "sorry, wrong answer!"
             }
         },
@@ -495,7 +500,6 @@ function cookieConsent()
 
 function getReadingText()
 {
-	/*make an ajax call to getText.php*/
 	var query = "getText.php";
 	
 	$.ajax
@@ -511,8 +515,77 @@ function getReadingText()
 
 function processData(data)
 {
-	currentText = data;
-	$('#textToRead').html('');
-	$('#textToRead').append(currentText);
+	var bookDetails = data.split('~~');
+	currentText = bookDetails[0];
+	currentOLID = bookDetails[1];
 	highlightText();
+	getBookInformation();
+}
+
+function setupSubMenuAnimation()
+{
+	$('.topMenu li').hover
+	(
+		function()
+		{
+			$(this).find('.subMenu').slideDown('fast');
+			$(this).find('.informationDisplay').slideDown('fast');
+		},
+		function()
+		{
+			$(this).find('.subMenu').slideUp('fast');
+			$(this).find('.informationDisplay').slideUp('fast');
+		}
+	)
+}
+
+function getBookInformation()
+{
+	var query='http://openlibrary.org/api/books?bibkeys=OLID:'+currentOLID+'&jscmd=data';
+	
+	$.ajax
+	(
+		{
+			type:'GET',
+			dataType: 'jsonp',
+			url:query,
+			success:processBookInformation
+		}
+	);
+}
+
+function processBookInformation(data)
+{
+	$.each
+	(
+		data,
+		function(i, item)
+		{
+			var bookDetails = ''
+			
+			bookDetails += '<img src="'+item.cover.medium+'" style="float:left; margin:5px;">';
+			bookDetails += 'Title:<br>';
+			bookDetails += item.title;
+			bookDetails += '<br><br>';
+			bookDetails += 'Author:<br>';
+			bookDetails += item.authors[0].name;
+			bookDetails += '<br><a href="'+item.authors[0].url+'" style="text-decoration:underline; color:blue;" target="_blank">About the author</a>';
+			bookDetails += '<br><br>';
+			bookDetails += 'Number of pages:<br>';
+			
+			if(item.number_of_pages == undefined)
+			{
+				bookDetails += 'Unknown';
+			}
+			else
+			{
+				bookDetails += item.number_of_pages;
+			}
+			
+			$('#bookInformation').html
+			(
+				bookDetails
+			);
+		}
+	);
 }

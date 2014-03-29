@@ -16,6 +16,10 @@
 			{
 				print "$value";
 			}
+			if($name == "olid")
+			{
+				print "~~$value";
+			}
 		}
 	}
 ?>

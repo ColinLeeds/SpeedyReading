@@ -27,14 +27,6 @@ a:link {
 	color: #936;
 	/*text-decoration: none;*/
 }
-/*a:visited {
-	color: #6E6C64;
-	text-decoration: none;
-}*/
-/*a:hover, a:active, a:focus {
-	color: #96C;
-	text-decoration: none;
-}*/
 
 /* ~~ this fixed width container surrounds the other divs ~~ */
 .container 
@@ -50,12 +42,6 @@ a:link {
 	background-color: white;
 }
 
-/* ~~ This is the layout information. ~~ 
-
-1) Padding is only placed on the top and/or bottom of the div. The elements within this div have padding on their sides. This saves you from any "box model math". Keep in mind, if you add any side padding or border to the div itself, it will be added to the width you define to create the *total* width. You may also choose to remove the padding on the element in the div and place a second div within it with no width and the padding necessary for your design.
-
-*/
-
 .content {
 
 	padding: 10px 0;
@@ -63,8 +49,10 @@ a:link {
 
 /* ~~ The footer ~~ */
 .footer {
-	padding: 10px 0;
-	background-color: white;
+	/*padding: 10px 0;*/
+	background-color:#EEE;
+	font-size:10px;
+	width:100%;
 }
 
 /* ~~ miscellaneous float/clear classes ~~ */
@@ -113,7 +101,6 @@ a:link {
 .vAlign
 {
 	display:table-cell;
-	/*padding:10px;*/
 }
 
 .collapsible
@@ -219,83 +206,106 @@ textarea
 	padding:5px 5px 0px 5px;
 }
 
-form {
+.topMenu li a
+{
+	text-decoration:none;
+	color:black;
+}
+
+form 
+{
     margin:0
 }
-form label {
-    /*margin-bottom:.2em;
-    font-size:1.3rem;
-    line-height:1.3rem;
-    font-size:13px;
-    line-height:13px;
-    color:#e6e6e1;*/
-    /*text-shadow:0px -1px #202020*/
+form label 
+{
 	display:block;
 }
-form label.error {
-    /*margin-bottom:1em;
-    font-size:1.2rem;
-    line-height:1.2rem;
-    font-size:12px;
-    line-height:12px;
-    color:#c0392b*/
-}
-form input[type="text"], form textarea {
-    /*margin-bottom:1.25em;
-    font-family:"Inconsolata", sans-serif;
-    font-size:1.4rem;
-    line-height:1.4rem;
-    font-size:14px;
-    line-height:14px;
-    box-shadow:none;
-    -moz-box-shadow:none;
-    -webkit-box-shadow:none;
-    background:#e6e6e6;
-    border:1px solid #191919;
-    -moz-border-radius:0.2em;
-    -webkit-border-radius:0.2em;
-    border-radius:0.2em*/
+
+form input[type="text"], form textarea 
+{
 	box-shadow:none;
     -moz-box-shadow:none;
     -webkit-box-shadow:none;
 	border:1px solid #191919;
 }
-form input[type="text"]:focus, form textarea:focus {
+form input[type="text"]:focus, form textarea:focus 
+{
     border-color:#191919;
     box-shadow:none;
     -moz-box-shadow:none;
     -webkit-box-shadow:none
 }
-form input[type="text"][disabled], form textarea[disabled] {
+
+form input[type="text"][disabled], form textarea[disabled] 
+{
     background:#fff
 }
-form input[type="text"].error, form textarea.error {
+
+form input[type="text"].error, form textarea.error 
+{
     background:#e6e6e6;
     border-color:#c0392b
 }
-fieldset {
+
+fieldset 
+{
     border:0px;
     margin:0;
     padding:0
 }
-.required {
+
+.required 
+{
     color:#e9266d
 }
-#success, #error {
+
+#success, #error 
+{
     display:none
 }
-#success span, #error span {
+
+#success span, #error span 
+{
     display:block;
-    /*position:absolute;
-    top:0;
-    width:100%*/
 }
-#success span p, #error span p {
+
+#success span p, #error span p 
+{
     margin-top:6em
 }
-/*#success span p {
-  color:#9bd32d;
-}*/
-#success span p, #error span p {
+
+#success span p, #error span p 
+{
   color:#c0392b;
+}
+
+.subMenu
+{
+	display:none;
+	background-color:#CCC;
+	list-style-type:none;
+	position:absolute;
+	z-index: 100;
+}
+
+.subMenu li a:hover
+{
+	background-color:#DDD;
+}
+
+.informationDisplay
+{
+	display:none;
+	height:310px;
+	width:700px;
+	background-color:#CCC;
+	position:absolute;
+	left:-500px;
+	z-index:100;
+}
+
+.bookDetails
+{
+	font-size:12px;
+	list-style-type:none;
 }
